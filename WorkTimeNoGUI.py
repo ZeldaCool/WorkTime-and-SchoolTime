@@ -3,7 +3,6 @@ import sys
 global completeitinerary
 global completecalculator
 global Dict
-Dict = {}
 
 def calculator():
     salary = float(input('Hello! Please enter your per hour salary here...'))
@@ -41,10 +40,11 @@ def calculator():
 
 def itinerarymaker():
     global item, time, dayDue, moneyMade
+    Dict = {}
     firstTime = True
-    stop = int(input("Would you like to continue? 1 for yes, 2 for no."))
     counter = 0
     while True:
+        stop = int(input("Would you like to continue? 1 for yes, 2 for no."))
         if stop == 1:
             if firstTime == True:
                 counter += 1
@@ -56,12 +56,12 @@ def itinerarymaker():
                     moneyMade = str(input("Enter how much the bonus is..."))
                     Dict['To Do'] = {'name': item, 'how long this will take': time, 'Day it needs to be done': dayDue,
                                      'bonus': moneyMade}
+                    firstTime = False
                     itinerarymaker()
                 else:
                     itinerarymaker()
             else:
                 counter += 1
-                stop = int(input("Would you like to continue? 1 for yes, 2 for no."))
                 item = str(input("Enter your item's name..."))
                 time = int(input("About how many hours will this take you?"))
                 dayDue = str(input("Enter the day it is due..."))
@@ -69,15 +69,22 @@ def itinerarymaker():
                 if bonus == 1:
                     moneyMade = str(input("Enter how much the bonus is..."))
                     countered = str(counter)
-                    Dict['To Do' + countered] = {'name': item, 'how long this will take': time, 'Day it needs to be done': dayDue,
-                                     'bonus': moneyMade}
+                    Dict['To Do' + countered] = {'name': item, 'how long this will take': time, 'Day it needs to be done': dayDue,'bonus': moneyMade}
                     itinerarymaker()
                 else:
+                    countered = str(counter)
+                    Dict['To Do' + countered] = {'name': item, 'how long this will take': time,'Day it needs to be done': dayDue}
+                    print(Dict)
                     itinerarymaker()
+                countered = str(counter)
+                Dict['To Do' + countered] = {'name': item, 'how long this will take': time, 'Day it needs to be done': dayDue}
+                print(Dict)
+                itinerarymaker()
+
 
         else:
             countered = str(counter)
-            Dict['To Do' + countered] = {'name': item, 'how long this will take': time, 'Day it needs to be done': dayDue}
+            Dict['To Do' + countered] = {'name': item, 'how long this will take': time,'Day it needs to be done': dayDue}
             print(Dict)
             main()
 
