@@ -1,20 +1,58 @@
 import sys
+import re
+from os.path import split
 
-global it, stop, firstuse, prename, pretime, predue,ib
+global it, stop, firstuse, prename, pretime, predue,ib, amstart, amend
+
 
 firstuse = True
+amstart = False
+amend = False
 
 def calculator():
     salary = float(input('Hello! Please enter your per hour salary here...'))
-    startTime = int(input('Enter your starting time in military time without colons!'))
-    endTime = int(input('Enter your ending time in military time without colons!'))
-    formula1 = endTime - startTime
-    formula2 = formula1/100
-    formula3 = formula2 * salary
-    print("Your salary is about...")
-    print(formula3)
-    print("Dollars!")
+    startTime = str(input('Enter your starting time in standard 12 hour time! Make sure to add AM or PM!'))
+    split1 = re.split(":",startTime,1)
+    group1 = split1[0] + split1[1]
+    if group1 <= 0:
+        print("Values out of scope!")
+        calculator()
+    elif group1 >= 1300:
+        print("Values out of scope!")
+        calculator()
+    search1 = re.search("AM", startTime)
+    if search1.group() == "AM":
+        amstart = True
+    else:
+        amstart = False
+    endTime = str(input('Enter your ending time in standard 12 hour time! Make sure to add AM or PM!'))
+    split2 = re.split(":",endTime,1)
+    search2 = re.search("AM", endTime)
+    if search2.group() == "AM":
+        amend = True
+    else:
+        amend = False
+    group2 = split2[0] + split1[1]
+    if group2 <= 0:
+        print("Values out of scope!")
+        calculator()
+    elif group2 >= 1300:
+        print("Values out of scope!")
+        calculator()
+
+    if amstart == False:
+        group1 = 1200 + group1
+    elif amend == False:
+        group2 = 1200 + group2
+    time1 = group2 - group1
+    time2 = time1/100
+    time3 = time2*salary
+    rounded = round(time3,2)
+    print(rounded)
     main()
+
+
+
 
 
 
