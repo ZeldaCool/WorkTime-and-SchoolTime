@@ -1,6 +1,5 @@
 import sys
 import re
-from os.path import split
 
 global it, stop, firstuse, prename, pretime, predue,ib, amstart, amend
 
@@ -11,28 +10,31 @@ amend = False
 
 def calculator():
     salary = float(input('Hello! Please enter your per hour salary here...'))
-    startTime = str(input('Enter your starting time in standard 12 hour time! Make sure to add AM or PM!'))
-    split1 = re.split(":",startTime,1)
+    startTime = str(input('Enter your starting time in standard 12 hour time without AM or PM.'))
+    starting = int(input("Is this AM? 1 for yes, 2 for no."))
+    if starting == 1:
+        amstart = True
+    else:
+        amstart = False
+    split1 = re.split(":", startTime, 1)
     group1 = split1[0] + split1[1]
+    group1 = int(group1)
     if group1 <= 0:
         print("Values out of scope!")
         calculator()
     elif group1 >= 1300:
         print("Values out of scope!")
         calculator()
-    search1 = re.search("AM", startTime)
-    if search1.group() == "AM":
-        amstart = True
-    else:
-        amstart = False
-    endTime = str(input('Enter your ending time in standard 12 hour time! Make sure to add AM or PM!'))
-    split2 = re.split(":",endTime,1)
-    search2 = re.search("AM", endTime)
-    if search2.group() == "AM":
+
+    endTime = str(input('Enter your ending time in standard 12 hour time without AM or PM.'))
+    ending = int(input("Is this AM? 1 for yes, 2 for no."))
+    if ending == 1:
         amend = True
     else:
         amend = False
+    split2 = re.split(":",endTime,1)
     group2 = split2[0] + split1[1]
+    group2 = int(group2)
     if group2 <= 0:
         print("Values out of scope!")
         calculator()
@@ -40,15 +42,16 @@ def calculator():
         print("Values out of scope!")
         calculator()
 
-    if amstart == False:
+    if not amstart:
         group1 = 1200 + group1
-    elif amend == False:
+    elif not amend:
         group2 = 1200 + group2
     time1 = group2 - group1
     time2 = time1/100
     time3 = time2*salary
     rounded = round(time3,2)
-    print(rounded)
+    rounded = str(rounded)
+    print("Your salary is about " + rounded + " Dollars!")
     main()
 
 
@@ -57,7 +60,7 @@ def calculator():
 
 
 def itinerary(myarray):
-    global stop,prename,pretime,firstuse, predue, it,ib
+    global stop,prename,pretime,firstuse, predue, it, ib
     print("Welcome to itinerary builder.")
     stop = int(input("Press one to continue, press two to quit."))
     while True:
@@ -77,6 +80,8 @@ def itinerary(myarray):
             myarray.append(["Item name:", name, "Rough time it will take to complete task:", time, "Date due:", due])
             print(myarray)
             itinerary(myarray)
+        print(myarray)
+        main()
 
 
 
@@ -87,6 +92,7 @@ def main():
     elif choice == 2:
         sys.exit("Thank you!")
     elif choice == 3:
+        it = []
         itinerary(it)
 
 main()
