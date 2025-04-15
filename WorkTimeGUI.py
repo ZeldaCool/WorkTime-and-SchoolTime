@@ -1,8 +1,18 @@
 from tkinter import *
 import tkinter as tk
+from tkinter import ttk
+
+global it,task,timetaken,due
 
 root = tk.Tk()
-root.title("WorkTime")
+root.title("WorkTime Salary Calculator")
+tabControl = ttk.Notebook(root)
+tab1 = ttk.Frame(tabControl)
+tab2 = ttk.Frame(tabControl)
+tabControl.add(tab1, text='Salary Calculator')
+tabControl.add(tab2, text='Itinerary Maker')
+tabControl.pack(expand=1, fill="both")
+
 
 salary_var = tk.StringVar()
 starttime_var = tk.StringVar()
@@ -23,18 +33,18 @@ def calculator():
     formula3 = formula2*salary
     rounded = round(formula3,2)
     rounded = str(rounded)
-    rounded_label = tk.Label(root, text = "Your salary is $" + rounded).grid(row=4,column=0)
+    rounded_label = tk.Label(tab1, text = "Your salary is about $" + rounded).grid(row=4,column=0)
 
-salary_label = tk.Label(root, text = "Per Hour Salary without money sign")
-salary_entry = tk.Entry(root, textvariable=salary_var)
+salary_label = tk.Label(tab1, text = "Per Hour Salary without money sign")
+salary_entry = tk.Entry(tab1, textvariable=salary_var)
 
-starttime_label = tk.Label(root, text = "Start Time for work in military time without colons")
-starttime_entry = tk.Entry(root,textvariable=starttime_var)
+starttime_label = tk.Label(tab1, text = "Start Time for work in military time without colons")
+starttime_entry = tk.Entry(tab1,textvariable=starttime_var)
 
-endtime_label = tk.Label(root,text = "End Time for work in military time without colons")
-endtime_entry = tk.Entry(root, textvariable=endtime_var)
+endtime_label = tk.Label(tab1,text = "End Time for work in military time without colons")
+endtime_entry = tk.Entry(tab1, textvariable=endtime_var)
 
-btn = tk.Button(root, text="Submit", command = calculator)
+btn = tk.Button(tab1, text="Submit", command = calculator)
 
 salary_label.grid(row = 0, column = 0)
 salary_entry.grid(row = 0, column = 1)
@@ -44,4 +54,39 @@ endtime_label.grid(row=2,column=0)
 endtime_entry.grid(row=2,column=1)
 btn.grid(row=3,column=0)
 
+task_var = tk.StringVar()
+timetaken_var = tk.StringVar()
+due_var = tk.StringVar()
+def itinerary(myArray,task,timetaken,due):
+    myArray.append(["Item name:", task, "Rough time it will take to complete task:", timetaken, "Date due:", due])
+    rounded_label = tk.Label(tab2, text = myArray).grid(row=4,column=0)
+it = []
+def itinerary_starter():
+    firstUse = True
+    global it
+    task = task_var.get()
+    timetaken = timetaken_var.get()
+    due = due_var.get()
+    itinerary(it,task,timetaken,due)
+task_label = tk.Label(tab2, text = "Name of task to complete")
+task_entry = tk.Entry(tab2, textvariable=task_var)
+
+timetaken_label = tk.Label(tab2, text = "How long will this take you?")
+timetaken_entry = tk.Entry(tab2, textvariable=timetaken_var)
+
+due_label = tk.Label(tab2, text = "When is it due?")
+due_entry = tk.Entry(tab2, textvariable=due_var)
+
+task = task_var.get()
+timetaken = timetaken_var.get()
+due = due_var.get()
+btnii = tk.Button(tab2, text = "Submit", command = itinerary_starter)
+
+task_label.grid(row = 0, column = 0)
+task_entry.grid(row = 0, column = 1)
+timetaken_label.grid(row = 1, column = 0)
+timetaken_entry.grid(row=1,column=1)
+due_label.grid(row=2,column=0)
+due_entry.grid(row=2,column=1)
+btnii.grid(row=3,column=0)
 root.mainloop()
