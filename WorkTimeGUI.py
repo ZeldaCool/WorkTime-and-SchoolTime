@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
+import re
 
 global it,task,timetaken,due
 
@@ -24,10 +25,14 @@ def calculator():
     starttime = starttime_var.get()
     endtime = endtime_var.get()
 
+    split1 = re.split(":", starttime, 1)
+    starttime = split1[0] + split1[1]
+    split2 = re.split(":", endtime, 1)
+    endtime = split2[0] + split2[1]
+    
     salary = float(salary)
     starttime = int(starttime)
     endtime = int(endtime)
-
     formula1 = endtime-starttime
     formula2 = formula1/100
     formula3 = formula2*salary
@@ -38,10 +43,10 @@ def calculator():
 salary_label = tk.Label(tab1, text = "Per Hour Salary without money sign")
 salary_entry = tk.Entry(tab1, textvariable=salary_var)
 
-starttime_label = tk.Label(tab1, text = "Start Time for work in military time without colons")
+starttime_label = tk.Label(tab1, text = "Start Time for work in military time")
 starttime_entry = tk.Entry(tab1,textvariable=starttime_var)
 
-endtime_label = tk.Label(tab1,text = "End Time for work in military time without colons")
+endtime_label = tk.Label(tab1,text = "End Time for work in military time")
 endtime_entry = tk.Entry(tab1, textvariable=endtime_var)
 
 btn = tk.Button(tab1, text="Submit", command = calculator)
