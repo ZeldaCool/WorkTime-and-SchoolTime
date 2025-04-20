@@ -77,10 +77,10 @@ def itinerary(myarray):
             myarray.extend([Itinerary(name, time, due)])
 
             for obj in myarray:
-                print("Task", obj.taskname, "How Long It Will Take", obj.timetaken, "Due:", obj.duedate, sep=', ')
+                print("Task", obj.taskname, "How Long It Will Take", obj.timetaken, "Due", obj.duedate, sep=', ')
             itinerary(myarray)
         for obj in myarray:
-            print("Task:", obj.taskname, "How Long It Will Take:", obj.timetaken, "Due:", obj.duedate, sep=' ')
+            print("Task:", obj.taskname, "How Long It Will Take:", obj.timetaken, "Due", obj.duedate, sep=' ')
 
 
 
