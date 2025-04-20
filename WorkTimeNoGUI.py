@@ -1,13 +1,20 @@
 import sys
 import re
+#Use Class Instead of Array for Itinerary
 
-global it, stop, firstuse, prename, pretime, predue,ib, amstart, amend
+global it, stop, firstuse, prename, pretime, predue,ib, amstart, amend, Itinerary
+
 
 
 firstuse = True
 amstart = False
 amend = False
 
+class Itinerary:
+    def __init__(self,taskname,timetaken,duedate):
+        self.taskname = taskname
+        self.timetaken = timetaken
+        self.duedate = duedate
 def calculator():
     salary = float(input('Hello! Please enter your per hour salary here...'))
     startTime = str(input('Enter your starting time in standard 12 hour time without AM or PM.'))
@@ -60,28 +67,20 @@ def calculator():
 
 
 def itinerary(myarray):
-    global stop,prename,pretime,firstuse, predue, it, ib
-    print("Welcome to itinerary builder.")
-    stop = int(input("Press one to continue, press two to quit."))
+    global firstuse
     while True:
+        stop = int(input('Press 1 to continue, press 2 to quit.'))
         while stop != 2:
-            while firstuse:
-                it = []
-                prename = str(input("Enter the name of the work to-do task..."))
-                pretime = str(input("Enter how long this will take you..."))
-                predue = str(input("Enter the date it is due..."))
-                it.append(["Item name:", prename,"Rough time it will take to complete task:", pretime, "Date due:", predue])
-                print(it)
-                firstuse = False
-                itinerary(it)
             name = str(input("Enter the name of the work to-do task..."))
             time = str(input("Enter how long this will take you..."))
             due = str(input("Enter the date it is due..."))
-            myarray.append(["Item name:", name, "Rough time it will take to complete task:", time, "Date due:", due])
-            print(myarray)
+            myarray.extend([Itinerary(name, time, due)])
+
+            for obj in myarray:
+                print("Task", obj.taskname, "How Long It Will Take", obj.timetaken, "Due:", obj.duedate, sep=', ')
             itinerary(myarray)
-        print(myarray)
-        main()
+        for obj in myarray:
+            print("Task:", obj.taskname, "How Long It Will Take:", obj.timetaken, "Due:", obj.duedate, sep=' ')
 
 
 
