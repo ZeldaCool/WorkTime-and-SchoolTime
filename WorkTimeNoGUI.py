@@ -11,10 +11,11 @@ amstart = False
 amend = False
 
 class Itinerary:
-    def __init__(self,taskname,timetaken,duedate):
+    def __init__(self,taskname,timetaken,duedate,timetostart):
         self.taskname = taskname
         self.timetaken = timetaken
         self.duedate = duedate
+        self.timetostart= timetostart
 def calculator():
     salary = float(input('Hello! Please enter your per hour salary here...'))
     startTime = str(input('Enter your starting time in standard 12 hour time without AM or PM.'))
@@ -74,14 +75,15 @@ def itinerary(myarray):
             name = str(input("Enter the name of the work to-do task..."))
             time = str(input("Enter how long this will take you..."))
             due = str(input("Enter the date it is due..."))
-            myarray.extend([Itinerary(name, time, due)])
+            timestart = str(input("Enter the time you need to start the task..."))
+
+            myarray.extend([Itinerary(name, time, due, timestart)])
 
             for obj in myarray:
-                print("Task", obj.taskname, "How Long It Will Take", obj.timetaken, "Due", obj.duedate, sep=', ')
+                print("Task", obj.taskname, "How Long It Will Take", obj.timetaken, "Due", obj.duedate, "What Time To Begin", obj.timetostart, sep=', ')
             itinerary(myarray)
         for obj in myarray:
-            print("Task:", obj.taskname, "How Long It Will Take:", obj.timetaken, "Due", obj.duedate, sep=' ')
-
+            print("Task", obj.taskname, "How Long It Will Take", obj.timetaken, "Due", obj.duedate,"What Time To Begin", obj.timetostart, sep=', ')
 
 
 def main():
