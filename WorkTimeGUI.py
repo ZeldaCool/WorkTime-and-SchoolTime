@@ -3,8 +3,14 @@ import tkinter as tk
 from tkinter import ttk
 import re
 
-global it,task,timetaken,due
+global it,task,timetaken,due, Itinerary
 
+class Itinerary:
+    def __init__(self,taskname,timetaken,duedate,timetostart):
+        self.taskname = taskname
+        self.timetakenname = timetaken
+        self.duedate = duedate
+        self.timetostart= timetostart
 root = tk.Tk()
 root.title("WorkTime Salary Calculator")
 tabControl = ttk.Notebook(root)
@@ -29,7 +35,7 @@ def calculator():
     starttime = split1[0] + split1[1]
     split2 = re.split(":", endtime, 1)
     endtime = split2[0] + split2[1]
-    
+
     salary = float(salary)
     starttime = int(starttime)
     endtime = int(endtime)
@@ -62,9 +68,16 @@ btn.grid(row=3,column=0)
 task_var = tk.StringVar()
 timetaken_var = tk.StringVar()
 due_var = tk.StringVar()
-def itinerary(myArray,task,timetaken,due):
-    myArray.append(["Item name:", task, "Rough time it will take to complete task:", timetaken, "Date due:", due])
-    rounded_label = tk.Label(tab2, text = myArray).grid(row=4,column=0)
+timestart_var = tk.StringVar()
+def itinerary(myArray,task,timetaken,due,timestart):
+    myArray.extend([Itinerary(task, timetaken, due,timestart)])
+    r=5
+    c=0
+    for obj in myArray:
+        printer = tk.Label(tab2, text ="Task "+obj.taskname+"How Long It Will Take "+obj.timetakenname+"Due: "+obj.duedate+"What Time To Begin "+obj.timetostart).grid(row = r, column = c)
+        r+=1
+
+
 it = []
 def itinerary_starter():
     firstUse = True
@@ -72,7 +85,8 @@ def itinerary_starter():
     task = task_var.get()
     timetaken = timetaken_var.get()
     due = due_var.get()
-    itinerary(it,task,timetaken,due)
+    timestart = timestart_var.get()
+    itinerary(it,task,timetaken,due,timestart)
 task_label = tk.Label(tab2, text = "Name of task to complete")
 task_entry = tk.Entry(tab2, textvariable=task_var)
 
@@ -82,9 +96,13 @@ timetaken_entry = tk.Entry(tab2, textvariable=timetaken_var)
 due_label = tk.Label(tab2, text = "When is it due?")
 due_entry = tk.Entry(tab2, textvariable=due_var)
 
+timestart_label = tk.Label(tab2, text = "What time do you need to start?")
+timestart_entry = tk.Entry(tab2, textvariable=timestart_var)
+
 task = task_var.get()
 timetaken = timetaken_var.get()
 due = due_var.get()
+timestart = timestart_var.get()
 btnii = tk.Button(tab2, text = "Submit", command = itinerary_starter)
 
 task_label.grid(row = 0, column = 0)
@@ -93,5 +111,7 @@ timetaken_label.grid(row = 1, column = 0)
 timetaken_entry.grid(row=1,column=1)
 due_label.grid(row=2,column=0)
 due_entry.grid(row=2,column=1)
-btnii.grid(row=3,column=0)
+timestart_label.grid(row=3,column=0)
+timestart_entry.grid(row=3,column=1)
+btnii.grid(row=4,column=0)
 root.mainloop()
