@@ -4,5 +4,4 @@
 
  SchoolTime contains grade calculators and an itinerary maker.
 
- Release 1 4/7/25: This release includes salary calculator and itinerary maker. Salary calculator handles standard 12 hour time.
 
