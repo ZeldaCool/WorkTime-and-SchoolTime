@@ -74,7 +74,7 @@ def itinerary(myArray,task,timetaken,due,timestart):
     r=5
     c=0
     for obj in myArray:
-        printer = tk.Label(tab2, text ="Task "+obj.taskname+" How Long It Will Take "+obj.timetakenname+" Due: "+obj.duedate+" What Time To Begin "+obj.timetostart).grid(row = r, column = c)
+        printer = tk.Label(tab2, text ="Task: "+obj.taskname+" How Long It Will Take: "+obj.timetakenname+" Due: "+obj.duedate+" What Time To Begin: "+obj.timetostart).grid(row = r, column = c)
         r+=1
 
 
